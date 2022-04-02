@@ -83,7 +83,12 @@ class MantraMfs100Plugin: FlutterPlugin, MethodCallHandler{
                 val ret= mfs100.MatchISO(map["firstTemplate"] as ByteArray ,map["secondTemplate"] as ByteArray)
                 result.success(ret)
             }
-
+            "extractISO" -> {
+                val map = call.arguments as Map<*, *>
+                val tempData  = ByteArray(2000)
+                val ret = mfs100.ExtractISOTemplate(map["rawData"] as ByteArray, tempData)
+                result.success(ret)
+            }
             "stopAutoCapture" ->{
                 result.success(mfs100.StopAutoCapture())
             }

@@ -29,8 +29,7 @@ class MantraMfs100 {
   }
 
   static const MethodChannel _channel = MethodChannel('mantra_mfs_100');
-  static const EventChannel _eventChannel =
-      EventChannel('mantra_mfs_100/event');
+  static const EventChannel _eventChannel = EventChannel('mantra_mfs_100/event');
 
   _registerEventChannel() {
     /// Static MFS Events are : Connected, Disconnected, HostCheckFailed
@@ -64,30 +63,28 @@ class MantraMfs100 {
     return res;
   }
 
-  Future<FingerData> startAutoCapture(
-      int timeOut, bool detectFastFinger) async {
-    var data = <String, dynamic>{
-      'detectFinger': detectFastFinger,
-      'timeout': timeOut
-    };
+  Future<FingerData> startAutoCapture(int timeOut, bool detectFastFinger) async {
+    var data = <String, dynamic>{'detectFinger': detectFastFinger, 'timeout': timeOut};
     final res = await _channel.invokeMethod('autoCapture', data);
     return Future.value(FingerData.load(res));
   }
 
-  Future<int> matchISO(
-      Uint8List firstTemplate, Uint8List secondTemplate) async {
-    var data = <String, dynamic>{
-      'firstTemplate': firstTemplate,
-      'secondTemplate': secondTemplate
-    };
+  Future<int> matchISO(Uint8List firstTemplate, Uint8List secondTemplate) async {
+    var data = <String, dynamic>{'firstTemplate': firstTemplate, 'secondTemplate': secondTemplate};
     final res = await _channel.invokeMethod('matchISO', data);
     print('matchISO ' + res.toString());
     return Future.value(res);
   }
 
+  Future<int> extractISO(List<int> rawData) async {
+    var data = <String, dynamic>{'rawData': rawData};
+    final res = await _channel.invokeMethod('extractISO', data);
+    print('extractISO ' + res.toString());
+    return Future.value(res);
+  }
+
   Future<String> getErrorMsg(int errorCode) async {
-    final res =
-        await _channel.invokeMethod('getErrorMessage', {'error': errorCode});
+    final res = await _channel.invokeMethod('getErrorMessage', {'error': errorCode});
     return Future.value(res);
   }
 
